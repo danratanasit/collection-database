@@ -30,3 +30,4 @@ AND EXISTS (
 INSERT INTO list_themes_xref (list_id, theme_id) 
 SELECT @list_id, @theme_id WHERE NOT EXISTS (SELECT 1 FROM list_themes_xref WHERE list_id = @list_id AND theme_id = @theme_id)
 
+SELECT * FROM list_themes_xref 
