@@ -1,3 +1,5 @@
+USE COLLECTION 
+
 --DROP TABLE albums--
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'albums')
 BEGIN
@@ -6,60 +8,443 @@ BEGIN
 	,	album_name VARCHAR(MAX)
 	,	artist_id UNIQUEIDENTIFIER 
 	,	year_released INT
+	,	CONSTRAINT fk_artist FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
 	)
 END
 GO
 
-INSERT INTO albums (album_name) VALUES ('North From Here')
-INSERT INTO albums (album_name) VALUES ('Slow, Deep and Hard')
-INSERT INTO albums (album_name) VALUES ('Asylun')
-INSERT INTO albums (album_name) VALUES ('Hatebreeder')
-INSERT INTO albums (album_name) VALUES ('In Their Darkened Shrines')
-INSERT INTO albums (album_name) VALUES ('Cryptic')
-INSERT INTO albums (album_name) VALUES ('At the Soundless Dawn')
-INSERT INTO albums (album_name) VALUES ('An Anatomy Of The Beast')
-INSERT INTO albums (album_name) VALUES ('Cosmic Genesis')
-INSERT INTO albums (album_name) VALUES ('Hellbrigade')
-INSERT INTO albums (album_name) VALUES ('Close To The Edge')
-INSERT INTO albums (album_name) VALUES ('The American Way')
-INSERT INTO albums (album_name) VALUES ('Evilized')
-INSERT INTO albums (album_name) VALUES ('Soul Rot')
-INSERT INTO albums (album_name) VALUES ('Twisted Into Form')
-INSERT INTO albums (album_name) VALUES ('Horrorscope')
-INSERT INTO albums (album_name) VALUES ('Mirrorworlds')
-INSERT INTO albums (album_name) VALUES ('Messiah')
-INSERT INTO albums (album_name) VALUES ('By Time Alone')
-INSERT INTO albums (album_name) VALUES ('The Haunted Made Me Do It')
-INSERT INTO albums (album_name) VALUES ('Cracked Brain')
-INSERT INTO albums (album_name) VALUES ('Whoracle')
-INSERT INTO albums (album_name) VALUES ('World Downfall')
-INSERT INTO albums (album_name) VALUES ('Consuming Impulse')
-INSERT INTO albums (album_name) VALUES ('Khaooohs And Kon-Fus-Ion')
+DECLARE 
+	@album_name VARCHAR(255)
+,	@artist_name VARCHAR(255)
 
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Sentenced') WHERE album_name = 'North From Here'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Type O Negative') WHERE album_name = 'Slow, Deep and Hard'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Neuraxis') WHERE album_name = 'Asylun'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Children of Bodom') WHERE album_name = 'Hatebreeder'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Nile') WHERE album_name = 'In Their Darkened Shrines'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Edge of Sanity') WHERE album_name = 'Cryptic'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Red Sparowes') WHERE album_name = 'At the Soundless Dawn'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Intestine Baalism') WHERE album_name = 'An Anatomy Of The Beast'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Vintersorg') WHERE album_name = 'Cosmic Genesis'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Centinex') WHERE album_name = 'Hellbrigade'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Yes') WHERE album_name = 'Close To The Edge'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Sacred Reich') WHERE album_name = 'The American Way'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Impious') WHERE album_name = 'Evilized'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Disfigurement') WHERE album_name = 'Soul Rot'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Forbidden') WHERE album_name = 'Twisted Into Form'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Overkill') WHERE album_name = 'Horrorscope'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Eucharist') WHERE album_name = 'Mirrorworlds'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Steel Prophet') WHERE album_name = 'Messiah'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Orphanage') WHERE album_name = 'By Time Alone'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'The Haunted') WHERE album_name = 'The Haunted Made Me Do It'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Destruction') WHERE album_name = 'Cracked Brain'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'In Flames') WHERE album_name = 'Whoracle'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Terrorizer') WHERE album_name = 'World Downfall'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Pestilence') WHERE album_name = 'Consuming Impulse'
-UPDATE albums SET artist_id = (SELECT artist_id FROM artists WHERE artist_name = 'Pan.Thy.Monium') WHERE album_name = 'Khaooohs And Kon-Fus-Ion'
+SELECT 
+	@album_name = 'North From Here'
+,	@artist_name = 'Sentenced'
 
-select * from albums
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Slow, Deep and Hard'
+,	@artist_name = 'Type O Negative'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Asylun'
+,	@artist_name = 'Neuraxis'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Hatebreeder'
+,	@artist_name = 'Children of Bodom'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'In Their Darkened Shrines'
+,	@artist_name = 'Nile'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Cryptic'
+,	@artist_name = 'Edge of Sanity'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'At the Soundless Dawn'
+,	@artist_name = 'Red Sparowes'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'An Anatomy Of The Beast'
+,	@artist_name = 'Intestine Baalism'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Cosmic Genesis'
+,	@artist_name = 'Vintersorg' 
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Hellbrigade'
+,	@artist_name = 'Centinex'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Close To The Edge'
+,	@artist_name = 'Yes'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'The American Way'
+,	@artist_name = 'Sacred Reich'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Evilized'
+,	@artist_name = 'Impious'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Soul Rot'
+,	@artist_name = 'Disfigurement' 
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Twisted Into Form'
+,	@artist_name = 'Forbidden'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Horrorscope'
+,	@artist_name = 'Overkill'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Mirrorworlds'
+,	@artist_name = 'Eucharist'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Messiah'
+,	@artist_name = 'Steel Prophet'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'By Time Alone'
+,	@artist_name = 'Orphanage'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'The Haunted Made Me Do It'
+,	@artist_name = 'The Haunted'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Cracked Brain'
+,	@artist_name = 'Destruction'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Whoracle'
+,	@artist_name = 'In Flames'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'World Downfall'
+,	@artist_name = 'Terrorizer'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Consuming Impulse'
+,	@artist_name = 'Pestilence'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT 
+	@album_name = 'Khaooohs And Kon-Fus-Ion'
+,	@artist_name = 'Pan.Thy.Monium'
+INSERT INTO albums (album_name, artist_id) 
+SELECT @album_name, artist_id
+FROM artists 
+WHERE artist_name = @artist_name
+AND NOT EXISTS (
+	SELECT 1 FROM albums 
+	WHERE album_name = @album_name
+	AND artist_id = (
+		SELECT artist_id
+		FROM artists 
+		WHERE artist_name = @artist_name
+	)
+)
+
+SELECT a1.album_id, a1.artist_id, a2.artist_name, a1.album_name 
+FROM albums a1
+JOIN artists a2
+	ON a1.artist_id = a2.artist_id
+ORDER BY a2.artist_name, a1.album_name 

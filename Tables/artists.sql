@@ -1,3 +1,6 @@
+USE COLLECTION 
+
+--DROP TABLE artists
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'artists')
 BEGIN
 	CREATE TABLE artists (
@@ -7,28 +10,108 @@ BEGIN
 END
 GO
 
-INSERT INTO artists (artist_name) VALUES ('Sentenced')
-INSERT INTO artists (artist_name) VALUES ('Type O Negative')
-INSERT INTO artists (artist_name) VALUES ('Neuraxis')
-INSERT INTO artists (artist_name) VALUES ('Children of Bodom')
-INSERT INTO artists (artist_name) VALUES ('Nile')
-INSERT INTO artists (artist_name) VALUES ('Edge of Sanity')
-INSERT INTO artists (artist_name) VALUES ('Red Sparowes')
-INSERT INTO artists (artist_name) VALUES ('Intestine Baalism')
-INSERT INTO artists (artist_name) VALUES ('Vintersorg')
-INSERT INTO artists (artist_name) VALUES ('Centinex')
-INSERT INTO artists (artist_name) VALUES ('Yes')
-INSERT INTO artists (artist_name) VALUES ('Sacred Reich')
-INSERT INTO artists (artist_name) VALUES ('Impious')
-INSERT INTO artists (artist_name) VALUES ('Disfigurement')
-INSERT INTO artists (artist_name) VALUES ('Forbidden')
-INSERT INTO artists (artist_name) VALUES ('Overkill')
-INSERT INTO artists (artist_name) VALUES ('Eucharist')
-INSERT INTO artists (artist_name) VALUES ('Steel Prophet')
-INSERT INTO artists (artist_name) VALUES ('Orphanage')
-INSERT INTO artists (artist_name) VALUES ('The Haunted')
-INSERT INTO artists (artist_name) VALUES ('Destruction')
-INSERT INTO artists (artist_name) VALUES ('In Flames')
-INSERT INTO artists (artist_name) VALUES ('Terrorizer')
-INSERT INTO artists (artist_name) VALUES ('Pestilence')
-INSERT INTO artists (artist_name) VALUES ('Pan.Thy.Monium')
+DECLARE @artist_name VARCHAR(255)
+
+SET @artist_name = 'Sentenced'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Type O Negative'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Neuraxis'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Children of Bodom'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Nile'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Edge of Sanity'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Red Sparowes'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Intestine Baalism'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Vintersorg'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Centinex'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Yes'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Sacred Reich'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Impious'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Disfigurement'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Forbidden'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Overkill'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Eucharist'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Steel Prophet'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Orphanage'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'The Haunted'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Destruction'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'In Flames'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Terrorizer'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Pestilence'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SET @artist_name = 'Pan.Thy.Monium'
+INSERT INTO artists (artist_name) 
+SELECT @artist_name WHERE NOT EXISTS (SELECT 1 FROM artists WHERE artist_name = @artist_name) 
+
+SELECT *
+FROM artists 
+ORDER BY artist_name 
